@@ -17,13 +17,15 @@ functions.cloudEvent("cloudEvent", async (cloudEvent) => {
     const email = await db.Email.findByPk(jsonObj.token);
     if (email.expireAt == null) {
       await email.update({ expireAt: new Date().toISOString() });
+    } else {
+      console.warn("Email was already sent");
     }
   } catch (err) {
     console.error("Email doesn't exist: ", err);
   }
 
   try {
-    sendEmail(jsonObj.email, jsonObj.token);
+    sendEmail(jsonObj.email, jsonObj.token, jsonObj.link);
     console.log(jsonObj);
   } catch (err) {
     console.error("Error while sending email: ", err);
