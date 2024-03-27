@@ -10,7 +10,7 @@ const mg = mailgun.client({
 });
 
 module.exports = {
-  sendEmail: (email, token) => {
+  sendEmail: (email, token, link) => {
     const emailHtml = `
           <!DOCTYPE html>
           <html lang="en">
@@ -23,7 +23,7 @@ module.exports = {
               <h1>Email Verification</h1>
               <p>Dear User,</p>
               <p>Please click the link below to verify your email address:</p>
-              <p><a href="https://${process.env.DOMAIN_NAME}/verify?token=${token}">Verify Email Address</a></p>
+              <p><a href="https://${process.env.DOMAIN_NAME}/${link}?token=${token}">Verify Email Address</a></p>
               <p>If you did not request this verification, please ignore this email.</p>
               <p>Thank you!</p>
           </body>
